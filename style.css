@@ -117,3 +117,24 @@ input::placeholder{
 .ribbon img{
     width: 100%;
 }
+
+.filters{
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.filter_container{
+    margin: 0 1rem;
+}
+
+.filter_container select{
+    width: 130px;
+    height: 40px;
+    font-size: 0.9rem;
+    border: 0;
+    overflow: hidden;
+    color: #303F9F;
+    margin-top: 0.5rem;
+    padding-left: 10px;
+    border-radius: 5px;
+}

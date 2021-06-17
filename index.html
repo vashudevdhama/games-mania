@@ -15,11 +15,37 @@
                 <input type="text" name="game_search" id="game_search" placeholder="Search">
             </div>
             <div class="filters">
-                All the filters goes here
+                <div class="filter_container">
+                    <p>Rating:</p>
+                    <select name="rating" id="rating_filter">
+                        <option value="all" selected>All</option>
+                        <option value="9">9+</option>
+                        <option value="8">8+</option>
+                        <option value="7">7+</option>
+                        <option value="6">6+</option>
+                        <option value="5">5+</option>
+                        <option value="4">4+</option>
+                        <option value="3">3+</option>
+                        <option value="2">2+</option>
+                        <option value="1">1+</option>
+                    </select>
+                </div>
+                <div class="filter_container">
+                    <p>Platform:</p>
+                    <select name="platform" id="platform_filter">
+                        <option value="all" selected>All</option>
+                    </select>
+                </div>
+                <div class="filter_container">
+                    <p>Genre:</p>
+                    <select name="genre" id="genre_filter">
+                        <option value="all" selected>All</option>
+                    </select>
+                </div>
             </div>
         </section>
         <section class="games_container" id="games_container">
-            <div class="game_card">
+            <!-- <div class="game_card">
                 <div class="game_card_head">
                     <h2>LittleBigPlanet PS Vita</h2>
                     <div class="rating">9.0</div>
@@ -31,7 +57,7 @@
                         <img src="./assets/editors_choice.png" alt="editor choice">
                     </div>
                 </div>
-            </div>
+            </div> -->
         </section>
     </main>
 

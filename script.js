@@ -26,6 +26,16 @@ async function fetchData(url){
 }
 
 function renderData(data){
+    console.log(filterByAttribute(data, 'rating', 'all'));
+    console.log(getAllPlatforms(data));
+    console.log(getAllGenre(data));
+
+    const platform_filter = document.getElementById('platform_filter');
+    renderAttributeOptions(getAllPlatforms(data), platform_filter);
+
+    const genre_filter = document.getElementById('genre_filter');
+    renderAttributeOptions(getAllGenre(data), genre_filter);
+
     data.map(game => {
         const gameCard = createGameCard(game);
         gamesContainer.appendChild(gameCard);
@@ -55,5 +65,56 @@ function createGameCard(gameObj){
 
     return gameCard;
 }
+
+function filterByAttribute(data, inputAttribute, attributeValue){
+    if(attributeValue === 'all') return data;
+
+    let filteredData;
+    if(inputAttribute === 'score'){
+        filteredData = data.filter(d => d[inputAttribute] >= attributeValue);
+    } else{
+        filteredData = data.filter(d => d[inputAttribute] === attributeValue);
+    }
+    return filteredData;
+}
+
+function getAllPlatforms(gameArr){
+    const platforms = [...new Set(gameArr.map(game => game.platform))]
+    return platforms;
+}
+
+function getAllGenre(gameArr){
+    const genre = [...new Set(gameArr.map(game => {
+        if(game.genre.indexOf(',') !== -1){
+            return game.genre.substring(0, game.genre.indexOf(','));
+        }
+        else if(game.genre){
+            return game.genre;
+        } else{
+            return 'No Genre';
+        }
+    }))]
+    return genre;
+}
+
+function renderAttributeOptions(attributes, attribute_filter){
+    attributes.map(attribute => {
+        const option = document.createElement('option');
+        option.setAttribute('value', `${attribute}`);
+        option.innerText = `${attribute.charAt(0).toUpperCase() + attribute.slice(1)}`
+        attribute_filter.appendChild(option);
+    })
+}
+
+
+
+
+
+
+
+
+
+
+
 
 fetchData(API_URL);
