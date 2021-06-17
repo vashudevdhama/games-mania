@@ -15,7 +15,7 @@ body{
 }
 
 .container{
-    margin: 2rem;
+    margin: 1rem 2rem 2rem;
     height: 100vh;
     display: flex;
     flex-direction: column;
@@ -63,6 +63,7 @@ input::placeholder{
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+    justify-content: center;
 }
 
 .game_card{
@@ -89,6 +90,7 @@ input::placeholder{
     justify-content: space-between;
     align-items: center;
     text-align: left;
+    width: 100%;
 }
 
 .rating{
