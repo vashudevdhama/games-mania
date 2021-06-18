@@ -18,24 +18,42 @@ async function fetchData(url){
         console.error("ERROR: ", err);
     } else if(result.ok){
         const data = await result.json();
-        data.shift(); //To remove api limit array element
-        renderData(data);
+        return data;
     } else{
         console.error("ERROR: ", result.status);
     }
 }
 
-function renderData(data){
-    console.log(filterByAttribute(data, 'rating', 'all'));
-    console.log(getAllPlatforms(data));
-    console.log(getAllGenre(data));
+function processFetchedData(data){
+    data.shift(); // TO remove API limit array element.
+    renderData(data);
 
+    //Render filter attribute options.
     const platform_filter = document.getElementById('platform_filter');
     renderAttributeOptions(getAllPlatforms(data), platform_filter);
-
+    
     const genre_filter = document.getElementById('genre_filter');
     renderAttributeOptions(getAllGenre(data), genre_filter);
 
+    //Apply event listener to Filters.
+    const filters = document.getElementById('filters');
+    filters.addEventListener('change', (e) => {
+        onSelectHandler(e, data);
+    })
+
+    const searchBar = document.getElementById('game_search');
+    searchBar.addEventListener('keyup', (e) => {
+        const searchString = e.target.value;
+        if(searchString && searchString !== ''){
+            renderData(searchGameByName(searchString, data));
+        } else{
+            renderData(data);
+        }
+    })
+}
+
+function renderData(data){
+    gamesContainer.innerHTML = '';
     data.map(game => {
         const gameCard = createGameCard(game);
         gamesContainer.appendChild(gameCard);
@@ -70,6 +88,7 @@ function filterByAttribute(data, inputAttribute, attributeValue){
     if(attributeValue === 'all') return data;
 
     let filteredData;
+    
     if(inputAttribute === 'score'){
         filteredData = data.filter(d => d[inputAttribute] >= attributeValue);
     } else{
@@ -106,15 +125,31 @@ function renderAttributeOptions(attributes, attribute_filter){
     })
 }
 
+function onSelectHandler(e, data){
+    const id = e.target.id;
+    const filterAttribute = id.substring(0, id.indexOf('_'))
+    const selectedValue = document.getElementById(id).value;
+    renderData(filterByAttribute(data, filterAttribute, selectedValue))
+}
+
+function searchGameByName(name, gameData){
+    name = name.toLowerCase();
+
+    const filteredData = []
+    gameData.map(game => {
+        const gameTitle = game.title.toLowerCase()
+        if(gameTitle.includes(name)) {
+            filteredData.push(game)
+        };
+    })
+    return filteredData;
+}
 
 
+//TODO pagination
+//TODO combine filters
 
-
-
-
-
-
-
-
-
-fetchData(API_URL);
+(async function(){
+    const data = await fetchData(API_URL); 
+    processFetchedData(data);
+})();
