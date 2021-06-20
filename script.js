@@ -126,9 +126,17 @@ function renderAttributeOptions(attributes, attribute_filter){
 }
 
 function onSelectHandler(e, data){
+    const filterIds = ['score_filter', 'platform_filter', 'genre_filter'];
     const id = e.target.id;
     const filterAttribute = id.substring(0, id.indexOf('_'))
     const selectedValue = document.getElementById(id).value;
+
+    //Allow only one filter at a time
+    filterIds.forEach(filterId => {
+        if(filterId !== id){
+            document.getElementById(filterId).value = 'all';
+        }
+    });
     renderData(filterByAttribute(data, filterAttribute, selectedValue))
 }
 
@@ -144,10 +152,6 @@ function searchGameByName(name, gameData){
     })
     return filteredData;
 }
-
-
-//TODO pagination
-//TODO combine filters
 
 (async function(){
     const data = await fetchData(API_URL); 

@@ -38,6 +38,12 @@ body{
     border-radius: 10px;
 }
 
+@media screen and (max-width: 1200px) {
+    .navbar_container {
+      flex-direction: column;
+    }
+  }
+
 .searchbar input{
     background-color: transparent;
     padding: 0.75rem;
@@ -58,6 +64,19 @@ input::placeholder{
     flex-direction: row;
     justify-content: space-around;
 }
+
+@media screen and (max-width: 1200px) {
+    .searchbar input {
+        max-width: 50%;
+        min-width: 200px;
+    }
+
+    .filters{
+        flex-wrap: wrap;
+        justify-content: space-evenly;
+        margin-top: 0.5rem;
+    }
+  }
 
 .games_container{
     display: flex;
@@ -81,6 +100,11 @@ input::placeholder{
     background: #E040FB;
     position: relative;
     text-align: left;
+}
+@media screen and (max-width: 1220px) {
+    .game_card{
+        width: 300px;
+    }
 }
 
 .game_card_head{
